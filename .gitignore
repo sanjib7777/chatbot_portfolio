@@ -1,0 +1,21 @@
+# === Python ===
+__pycache__/
+
+
+# === Virtual Environment ===
+myenv/
+
+
+# === Jupyter Notebooks ===
+.ipynb_checkpoints/
+
+# === Environment Variables ===
+.env
+
+Untitled.py
+
+# === Dataset ===
+dataset/*.pdf
+dataset/*.docx
+dataset/*.xlsx
+
