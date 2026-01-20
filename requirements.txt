@@ -10,3 +10,4 @@ huggingface_hub
 openai
 scikit-learn 
 redis
+python-multipart
