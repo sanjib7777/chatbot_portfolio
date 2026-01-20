@@ -6,7 +6,7 @@ langchain-qdrant
 langchain-community
 langchain-text-splitters
 pymupdf
-sentence-transformers
+huggingface_hub
 openai
 scikit-learn 
 redis
