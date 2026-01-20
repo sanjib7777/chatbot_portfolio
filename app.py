@@ -6,7 +6,7 @@ import uuid
 from ingestion import ingest_cv
 from retrieve import answer_with_context
 from semantic_cache import get_semantic_cache, set_semantic_cache
-from retrieve import embeddings
+from embedding import embeddings
 
 
 app = FastAPI(title="Sanjib Shah Portfolio Chatbot")

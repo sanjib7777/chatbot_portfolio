@@ -2,10 +2,10 @@ import os
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from langchain_qdrant import QdrantVectorStore
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+# from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from openai import OpenAI
 from qdrant_client.http.models import Distance, VectorParams
-
+from embedding import embeddings
 # ========= LOAD ENV =========
 load_dotenv()
 
@@ -16,10 +16,10 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 COLLECTION_NAME = "sanjib_portfolio"
 
 # ========= EMBEDDING =========
-embeddings = HuggingFaceBgeEmbeddings(
-    model_name="BAAI/bge-m3",
-    encode_kwargs={"normalize_embeddings": True}
-)
+# embeddings = HuggingFaceBgeEmbeddings(
+#     model_name="BAAI/bge-m3",
+#     encode_kwargs={"normalize_embeddings": True}
+# )
 
 # ========= CONNECT QDRANT =========
 qdrant = QdrantClient(

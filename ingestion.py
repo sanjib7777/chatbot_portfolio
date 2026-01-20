@@ -1,23 +1,24 @@
 import os
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import Distance, VectorParams
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+# from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyMuPDFLoader
 from dotenv import load_dotenv
+from embedding import embeddings
 
 load_dotenv()
 
 # ========= CONFIG =========
-COLLECTION_NAME = "sanjib_portfolio"
+COLLECTION_NAME = "sanjib_portfolio_CV"
 QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
 # ========= EMBEDDING =========
-embeddings = HuggingFaceBgeEmbeddings(
-    model_name="BAAI/bge-m3",
-    encode_kwargs={"normalize_embeddings": True}
-)
+# embeddings = HuggingFaceBgeEmbeddings(
+#     model_name="BAAI/bge-m3",
+#     encode_kwargs={"normalize_embeddings": True}
+# )
 
 # ========= SECTION HEADERS =========
 SECTION_HEADERS = [
