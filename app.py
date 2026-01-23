@@ -8,13 +8,13 @@ from retrieve import answer_with_context
 from semantic_cache import get_semantic_cache, set_semantic_cache
 from embedding import embeddings
 from fastapi.middleware.cors import CORSMiddleware
-
+from semantic_cache import clear_session_cache
 
 app = FastAPI(title="Sanjib Shah Portfolio Chatbot")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins (OK for portfolio)
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -67,3 +67,12 @@ async def chat(req: ChatRequest, request: Request):
     set_semantic_cache(session_id, req.question, answer, embeddings)
 
     return {"answer": answer, "cached": False}
+
+
+
+@app.post("/clear-session")
+def clear_session(req: dict):
+    clear_session_cache(req["session_id"])
+    return {"status": "cleared"}
+
+

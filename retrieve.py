@@ -76,9 +76,14 @@ Question:
 {question}
 
 Rules:
-- If the answer is not in the context, say "I don't have that information about it yet."
-- Be concise and professional.
+- Answer in 1 or 2 short paragraphs only.
+- Do NOT use bullet points, lists, tables, markdown, or headings.
+- Write in plain text sentences.
+- Be concise, professional and natural.
+- If the answer is not in the context, say exactly:
+  "I don't have that information about it yet."
 """
+
 
     response = groq_client.chat.completions.create(
         model="openai/gpt-oss-20b",

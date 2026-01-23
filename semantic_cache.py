@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from redis_client import redis_client, REDIS_TTL
 
-SIM_THRESHOLD = 0.8
+SIM_THRESHOLD = 0.9
 
 
 def normalize(text: str):
@@ -13,18 +13,24 @@ def normalize(text: str):
 def get_semantic_cache(session_id: str, query: str, embedder):
     query_vec = embedder.embed_query(query)
 
-    # Convert to list if needed
+    # Convert numpy → list
     if isinstance(query_vec, np.ndarray):
         query_vec = query_vec.tolist()
 
-    keys = redis_client.keys(f"sem:{session_id}:*")
+    keys = redis_client.scan_iter(f"sem:{session_id}:*")
 
     for k in keys:
-        data = json.loads(redis_client.get(k))
+        raw = redis_client.get(k)
+        if not raw:
+            continue
+
+        data = json.loads(raw)
         cached_vec = data["embedding"]
 
         sim = cosine_similarity([query_vec], [cached_vec])[0][0]
+
         if sim >= SIM_THRESHOLD:
+            print("⚡ Semantic cache HIT:", sim)
             return data["answer"]
 
     return None
@@ -33,7 +39,7 @@ def get_semantic_cache(session_id: str, query: str, embedder):
 def set_semantic_cache(session_id: str, query: str, answer: str, embedder):
     vec = embedder.embed_query(query)
 
-    # 🔑 Convert ndarray → list for JSON
+    # Convert numpy → list
     if isinstance(vec, np.ndarray):
         vec = vec.tolist()
 
@@ -48,3 +54,14 @@ def set_semantic_cache(session_id: str, query: str, answer: str, embedder):
             "answer": answer
         })
     )
+
+
+def clear_session_cache(session_id: str):
+    """Delete only this user's semantic memory"""
+    keys = redis_client.scan_iter(f"sem:{session_id}:*")
+    deleted = 0
+    for k in keys:
+        redis_client.delete(k)
+        deleted += 1
+
+    print(f"🧹 Cleared {deleted} Redis keys for session {session_id}")
