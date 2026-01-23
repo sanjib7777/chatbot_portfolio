@@ -14,11 +14,11 @@ app = FastAPI(title="Sanjib Shah Portfolio Chatbot")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
-    allow_credentials=True,
+    allow_origins=["https://sanjibshah.com.np"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 UPLOAD_DIR = "dataset"
@@ -28,15 +28,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 class ChatRequest(BaseModel):
     question: str
 
-@app.middleware("http")
-async def add_session_cookie(request: Request, call_next):
-    session_id = request.cookies.get("session_id")
-    if not session_id:
-        session_id = str(uuid.uuid4())
 
-    response = await call_next(request)
-    response.set_cookie(key="session_id", value=session_id, httponly=True)
-    return response
 
 @app.post("/ingest")
 async def ingest(file: UploadFile = File(...)):

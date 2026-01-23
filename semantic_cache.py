@@ -64,4 +64,4 @@ def clear_session_cache(session_id: str):
         redis_client.delete(k)
         deleted += 1
 
-    print(f"🧹 Cleared {deleted} Redis keys for session {session_id}")
+    print(f" Cleared {deleted} Redis keys for session {session_id}")
