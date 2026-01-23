@@ -7,9 +7,19 @@ from ingestion import ingest_cv
 from retrieve import answer_with_context
 from semantic_cache import get_semantic_cache, set_semantic_cache
 from embedding import embeddings
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(title="Sanjib Shah Portfolio Chatbot")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (OK for portfolio)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 UPLOAD_DIR = "dataset"
 os.makedirs(UPLOAD_DIR, exist_ok=True)

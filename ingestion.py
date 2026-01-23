@@ -4,8 +4,8 @@ from qdrant_client.http.models import Distance, VectorParams
 # from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyMuPDFLoader
-from dotenv import load_dotenv
 from embedding import embeddings
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -81,9 +81,9 @@ def ingest_cv(cv_path: str):
             collection_name=COLLECTION_NAME,
             vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
         )
-        print("✅ Collection created.")
+        print(" Collection created.")
     else:
-        print("ℹ️ Collection already exists.")
+        print(" Collection already exists.")
 
     # ========= LOAD PDF =========
     loader = PyMuPDFLoader(cv_path)

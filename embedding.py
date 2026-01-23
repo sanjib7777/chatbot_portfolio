@@ -24,6 +24,4 @@ class HFHostedEmbeddings(Embeddings):
     def embed_documents(self, texts: list[str]):
         return [hf_client.feature_extraction(t, model=MODEL_NAME) for t in texts]
 
-
-# ✅ This is what you import everywhere
 embeddings = HFHostedEmbeddings()
